@@ -19,7 +19,7 @@ A bilingual (English/Ukrainian) web application for classifying fashion items us
 
 ## 🔧 Technologies
 
-- Python 3.8+
+- Python 3.11
 - Streamlit
 - TensorFlow
 - Matplotlib
