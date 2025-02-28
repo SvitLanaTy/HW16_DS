@@ -6,7 +6,8 @@ st.set_page_config(
     page_icon="👕",
     layout="wide"
 )
-
+import gdown
+import os
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import load_model
@@ -110,9 +111,20 @@ def load_cnn_model():
 
 @st.cache_resource
 def load_vgg16_model():
+    model_path = "my_vgg16_model.h5"
+    file_id = "1f54K4Xf1ltqqK05r-P5G84O6dFozKflU"
+    url = f"https://drive.google.com/uc?id={file_id}"
+    
     try:
-        model = load_model('my_vgg16_model.h5', compile=False)
+        # Завантажуємо файл, якщо він ще не існує
+        if not os.path.exists(model_path):
+            with st.spinner("Завантаження моделі..."):
+                gdown.download(url, model_path, quiet=False)
+
+        # Завантажуємо модель
+        model = load_model(model_path, compile=False)
         return model
+
     except Exception as e:
         st.error(f"Помилка завантаження VGG16 моделі: {str(e)}")
         return None
